@@ -5,13 +5,12 @@ class PolyanetConnection extends Connection {
   constructor() {
     super("polyanets");
   }
-
-  drawPoint(x,y) {
-    console.log(`Drawing ${this.option} in point ${x},${y}`)
-    let data = { "candidateId":this.id, "row": x, "column":y }
-    this.post(data,this.option);
-  }
   
+  drawPoint = async (x,y) => {
+    let data = { "candidateId":this.id, "row": x, "column":y }
+    return await this.post(data,this.option);
+  }
+
   drawLine(x_init, y_init, x_end, y_end) {
     console.log(`Drawing a line of ${this.option} 
                   from ${x_init},${y_init} to ${x},${y}`);

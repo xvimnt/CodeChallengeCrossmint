@@ -6,10 +6,9 @@ class ComethConnection extends Connection {
     super("comeths");
   }
 
-  drawPoint(x, y, direction) {
-    console.log(`Drawing ${this.option} in point ${x},${y}`)
+  drawPoint = async (x,y, direction) => {
     let data = { "candidateId":this.id, "row": x, "column":y, "direction":direction }
-    this.post(data,this.option);
+    return await this.post(data,this.option);
   }
   
   drawLine(x_init, y_init, x_end, y_end, direction) {
@@ -37,7 +36,7 @@ class ComethConnection extends Connection {
     for(let x_pointer = x_init; x_pointer <= x_end; x_pointer++) {
       for(let y_pointer = y_init; y_pointer <= y_end; y_pointer++) {
         let data = { "candidateId":this.id, "row": x_pointer, "column":y_pointer, "direction":direction }
-        console.log(`Updating ${x_pointer},${y_pointer}!`)
+        // console.log(`Updating ${x_pointer},${y_pointer}!`)
         this.post(data,this.option)
         x_pointer++
       }
@@ -48,7 +47,7 @@ class ComethConnection extends Connection {
     for(let x_pointer = x_init; x_pointer <= x_end; x_pointer++) {
       for(let y_pointer = y_init; y_pointer >= y_end; y_pointer--) {
         let data = { "candidateId":this.id, "row": x_pointer, "column":y_pointer, "direction":direction }
-        console.log(`Updating ${x_pointer},${y_pointer}!`)
+        // console.log(`Updating ${x_pointer},${y_pointer}!`)
         this.post(data,this.option)
         x_pointer++
       }

@@ -9,28 +9,30 @@ class Connection {
     this.option = option;
   }
 
-  post(data, option) {
-    axios
+  post = async (data, option) => {
+    return await axios
     .post(this.url + option, data)
-    .then(res => {
-      // console.log(`Updated successfully ${JSON.stringify(data)}!`)
-    })
-    .catch(error => {
-      console.error(error)
-    })
   }
 
-  
-  delete(data, option) {
-    axios
-    .delete(this.url + option, data)
-    .then(res => {
-      // console.log(`Deleted successfully ${JSON.stringify(data)}!`)
-    })
-    .catch(error => {
-      console.error(error)
-    })
+  clear = async () => {
+    const responses = [];
+    for(let x = 25; x < 30; x++) {
+      for(let y = 25; y < 30; y++) {
+          responses.push(
+            await axios.delete(
+              this.url + this.option, { data: { "candidateId":this.id, "row": x, "column":y }}
+            )
+          );
+      }  
+    }
   }
+
+  delete = async (x, y, option) => {
+    return await axios.delete (
+              this.url + this.option, { data: { "candidateId":this.id, "row": x, "column":y }}
+            )
+  }
+  
 }
 
 module.exports = Connection;

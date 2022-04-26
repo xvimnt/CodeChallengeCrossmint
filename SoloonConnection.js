@@ -6,10 +6,10 @@ class SoloonConnection extends Connection {
     super("soloons");
   }
 
-  drawPoint(x, y, color) {
-    console.log(`Drawing ${this.option} in point ${x},${y}`)
+  
+  drawPoint = async (x,y, color) => {
     let data = { "candidateId":this.id, "row": x, "column":y, "color":color }
-    this.post(data,this.option);
+    return await this.post(data,this.option);
   }
   
   drawLine(x_init, y_init, x_end, y_end, color) {
