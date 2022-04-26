@@ -4,6 +4,9 @@ const ComethConnection = require('./ComethConnection');
 
 class ConnectionFactory {
 
+  /*
+  This will return an object that prints spacial objects in our table
+  */
   create(type) {
     switch(type) {
       case 'polyanet':

@@ -9,8 +9,11 @@ class Connection {
     this.option = option;
   }
   
-  
+  /*
+    Method that prints polyanets, soloons and comeths
+  */
   post = async (data, option) => {
+    // await to reduce the traffic to the api
     await new Promise(resolve => setTimeout(resolve, 500 * (data.row + data.column)));
     return await axios
     .post(this.url + option, data).catch(err => {
@@ -20,10 +23,14 @@ class Connection {
     })
   }
 
+  /*
+    Method to reset the whole table (fill it with blank spaces)
+  */
   clear = async () => {
     const responses = [];
     for(let row = 0; row < 30; row++) {
       for(let column = 0; column <= 30; column++) {
+          // await to reduce the traffic to the api
           await new Promise(resolve => setTimeout(resolve, 10 * (row + column)));
           responses.push( 
             await axios.delete(
@@ -38,7 +45,11 @@ class Connection {
     }
   }
 
+  /*
+    Method that prints a blank space in a cell
+  */
   delete = async (row, column, option) => {
+    // await to reduce the traffic to the api
     await new Promise(resolve => setTimeout(resolve, 850 * (row * column)));
     return await axios.delete (
               this.url + this.option, { data: { "candidateId":this.id, "row": row, "column":column }}

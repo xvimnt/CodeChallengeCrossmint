@@ -13,7 +13,7 @@ let comethConnection = connectionFactory.create('cometh')
 const responses = [];
 // polyanetConnection.clear()
 /*
-Obtaining our goal from the API and then parsing into requests
+Obtaining our goal from the API and then parsing it into requests
 */
 axios.get(polyanetConnection.url + `map/${polyanetConnection.id}/goal`)
 .then(res => {
