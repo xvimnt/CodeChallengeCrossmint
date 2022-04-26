@@ -8,36 +8,44 @@ class Connection {
   constructor(option) {
     this.option = option;
   }
-
+  
+  
   post = async (data, option) => {
+    await new Promise(resolve => setTimeout(resolve, 500 * (data.row + data.column)));
     return await axios
     .post(this.url + option, data).catch(err => {
-      console.log(`an error was ocurred in the post method ${JSON.stringify(data)}`)
+      console.log(`an error was ocurred in the post method ${data.row},${data.column}`)
     }).then(res => {
-      console.log(`The field ${JSON.stringify(data)} was updated correclty`)
+      console.log(`The field ${data.row},${data.column} was updated correclty`)
     })
   }
 
   clear = async () => {
     const responses = [];
-    for(let x = 0; x < 30; x++) {
-      for(let y = 0; y < 30; y++) {
-          responses.push(
+    for(let row = 0; row < 30; row++) {
+      for(let column = 0; column <= 30; column++) {
+          await new Promise(resolve => setTimeout(resolve, 10 * (row + column)));
+          responses.push( 
             await axios.delete(
-              this.url + this.option, { data: { "candidateId":this.id, "row": x, "column":y }}
-            )
+              this.url + this.option, { data: { "candidateId":this.id, "row": row, "column":column }}
+            ).catch(err => {
+              console.log(`an error was ocurred in the delete method ${row},${column}`)
+            }).then(res => {
+              console.log(`The field ${row},${column} was deleted correclty`)
+            })
           );
       }  
     }
   }
 
-  delete = async (x, y, option) => {
+  delete = async (row, column, option) => {
+    await new Promise(resolve => setTimeout(resolve, 850 * (row * column)));
     return await axios.delete (
-              this.url + this.option, { data: { "candidateId":this.id, "row": x, "column":y }}
+              this.url + this.option, { data: { "candidateId":this.id, "row": row, "column":column }}
             ).catch(err => {
-      console.log(`an error was ocurred in the delete method ${x},${y}`)
+      console.log(`an error was ocurred in the delete method ${row},${column}`)
     }).then(res => {
-      console.log(`The field ${x},${y} was deleted correclty`)
+      console.log(`The field ${row},${column} was deleted correclty`)
     })
   }
   

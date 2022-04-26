@@ -11,20 +11,20 @@ let soloonConnection = connectionFactory.create('soloon')
 let comethConnection = connectionFactory.create('cometh')
 
 const responses = [];
-
+// polyanetConnection.clear()
 /*
 Obtaining our goal from the API and then parsing into requests
 */
 axios.get(polyanetConnection.url + `map/${polyanetConnection.id}/goal`)
 .then(res => {
-  let y_pointer = 0;
+  let x_pointer = 0;
   res.data.goal.forEach(row => {
-    let x_pointer = 0;
+    let y_pointer = 0;
     row.forEach(element => {
       // console.log(`doing ${element} on ${x_pointer},${y_pointer}`)
         switch(element){
           case "SPACE":
-            responses.push(polyanetConnection.delete(x_pointer, y_pointer))
+            // responses.push(polyanetConnection.delete(x_pointer, y_pointer))
             break;
           case "POLYANET":
             responses.push(polyanetConnection.drawPoint(x_pointer, y_pointer))
@@ -54,12 +54,12 @@ axios.get(polyanetConnection.url + `map/${polyanetConnection.id}/goal`)
             responses.push(soloonConnection.drawPoint(x_pointer, y_pointer, 'purple'))
             break;
           default:
-            console.log("WTFFFFF: " + element)
+            console.log("INVALID OPTION: " + element)
             break;
         }
-      x_pointer++;
       
+      y_pointer++;
     })
-    y_pointer++;
+    x_pointer++;
   });
 })
