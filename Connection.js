@@ -11,13 +11,17 @@ class Connection {
 
   post = async (data, option) => {
     return await axios
-    .post(this.url + option, data)
+    .post(this.url + option, data).catch(err => {
+      console.log(`an error was ocurred in the post method ${JSON.stringify(data)}`)
+    }).then(res => {
+      console.log(`The field ${JSON.stringify(data)} was updated correclty`)
+    })
   }
 
   clear = async () => {
     const responses = [];
-    for(let x = 25; x < 30; x++) {
-      for(let y = 25; y < 30; y++) {
+    for(let x = 0; x < 30; x++) {
+      for(let y = 0; y < 30; y++) {
           responses.push(
             await axios.delete(
               this.url + this.option, { data: { "candidateId":this.id, "row": x, "column":y }}
@@ -30,7 +34,11 @@ class Connection {
   delete = async (x, y, option) => {
     return await axios.delete (
               this.url + this.option, { data: { "candidateId":this.id, "row": x, "column":y }}
-            )
+            ).catch(err => {
+      console.log(`an error was ocurred in the delete method ${x},${y}`)
+    }).then(res => {
+      console.log(`The field ${x},${y} was deleted correclty`)
+    })
   }
   
 }
